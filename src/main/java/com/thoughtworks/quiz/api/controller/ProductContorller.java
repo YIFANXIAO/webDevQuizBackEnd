@@ -5,6 +5,8 @@ import com.thoughtworks.quiz.params.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,6 +25,12 @@ public class ProductContorller {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(productsAll);
+    }
+
+    @PostMapping("/product")
+    public ResponseEntity addProduct(@RequestBody Product product) {
+        productService.addProduct(product);
+        return ResponseEntity.ok().build();
     }
 
 }

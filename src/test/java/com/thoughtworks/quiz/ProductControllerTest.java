@@ -1,5 +1,6 @@
 package com.thoughtworks.quiz;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.quiz.api.repository.ProductRepository;
 import com.thoughtworks.quiz.params.dto.ProductDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,12 +8,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,5 +52,16 @@ public class ProductControllerTest {
         productRepository.deleteAll();
         mockMvc.perform(get("/product/all"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shuld_add_product_given_product() throws Exception {
+        ProductDto product3 = ProductDto.builder().id(10).name("柠檬").price(5).unit("罐").image("http://images.meishij.net/p/20110831/7b3b546acb130eaacc2fc7e44ed09f3d_180x180.jpg").build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(product3);
+        mockMvc.perform(post("/product").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        assertEquals(productRepository.findAll().size(), 3);
     }
 }

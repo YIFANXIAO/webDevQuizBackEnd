@@ -6,8 +6,6 @@ import com.thoughtworks.quiz.params.domain.Product;
 import com.thoughtworks.quiz.params.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,5 +31,11 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
         return productList;
+    }
+
+    @Override
+    public void addProduct(Product product) {
+        ProductDto productDto = ProductDto.builder().name(product.getName()).price(product.getPrice()).image(product.getImage()).unit(product.getUnit()).build();
+        productRepository.save(productDto);
     }
 }
