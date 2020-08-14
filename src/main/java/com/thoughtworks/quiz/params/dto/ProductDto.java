@@ -16,6 +16,8 @@ public class ProductDto {
 
     @Id
     @GeneratedValue
+    @Setter
+    @Getter
     private int id;
 
     @Setter
