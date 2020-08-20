@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderRepository extends PagingAndSortingRepository<OrderDto, Integer> {
 
@@ -13,4 +14,6 @@ public interface OrderRepository extends PagingAndSortingRepository<OrderDto, In
 
     @Override
     List<OrderDto> findAll();
+
+    List<OrderDto> findByProductId(Integer productId);
 }

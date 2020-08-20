@@ -13,6 +13,9 @@ public class Order {
     private int id;
 
     @NotNull
+    private int productId;
+
+    @NotNull
     private String name;
 
     @NotNull

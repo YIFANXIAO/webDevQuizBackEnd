@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "product_order")
@@ -19,6 +20,10 @@ public class OrderDto {
     @Setter
     @Getter
     private int id;
+
+    @Setter
+    @Getter
+    private int productId;
 
     @Setter
     @Getter

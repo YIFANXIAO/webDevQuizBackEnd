@@ -9,4 +9,6 @@ public interface OrderService {
     List<Order> getOrdersByPage();
 
     void deleteOrderById(int orderId);
+
+    void addOrderByProductId(int productId);
 }
