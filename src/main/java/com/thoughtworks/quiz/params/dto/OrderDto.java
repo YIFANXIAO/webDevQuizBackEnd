@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "order")
+@Table(name = "product_order")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +16,8 @@ public class OrderDto {
 
     @Id
     @GeneratedValue
+    @Setter
+    @Getter
     private int id;
 
     @Setter
@@ -32,6 +34,6 @@ public class OrderDto {
 
     @Setter
     @Getter
-    private String count;
+    private int count;
 
 }
