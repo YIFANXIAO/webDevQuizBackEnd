@@ -56,7 +56,7 @@ public class ProductControllerTest {
 
     @Test
     public void shuld_add_product_given_product() throws Exception {
-        ProductDto product3 = ProductDto.builder().id(10).name("柠檬").price(5).unit("罐").image("http://images.meishij.net/p/20110831/7b3b546acb130eaacc2fc7e44ed09f3d_180x180.jpg").build();
+        ProductDto product3 = ProductDto.builder().id(10).name("柠檬").price(5).unit("个").image("http://images.meishij.net/p/20110831/7b3b546acb130eaacc2fc7e44ed09f3d_180x180.jpg").build();
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(product3);
         mockMvc.perform(post("/product").content(jsonString).contentType(MediaType.APPLICATION_JSON))
