@@ -4,7 +4,9 @@ spring:
     username: "root"
     password: "123456"
     driver-class-name: com.mysql.cj.jdbc.Driver
-
 #  jpa:
 #    hibernate:
 #      ddl-auto: create
+
+server:
+  port: 9090

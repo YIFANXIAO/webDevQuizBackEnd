@@ -3,6 +3,7 @@ package com.thoughtworks.quiz.api.service.impl;
 import com.thoughtworks.quiz.api.repository.OrderRepository;
 import com.thoughtworks.quiz.api.repository.ProductRepository;
 import com.thoughtworks.quiz.api.service.OrderService;
+import com.thoughtworks.quiz.common.errors.ErrorCode;
 import com.thoughtworks.quiz.params.domain.Order;
 import com.thoughtworks.quiz.params.dto.OrderDto;
 import com.thoughtworks.quiz.params.dto.ProductDto;
@@ -10,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import com.thoughtworks.quiz.common.exception.NoDataException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
     ProductRepository productRepository;
 
     @Override
-    public List<Order> getOrdersByPage() {
+    public List<Order> getOrdersByPage() throws NoDataException {
         Pageable pageable = PageRequest.of(0, 5);
         List<Order> collect = orderRepository.findAll(pageable).get().map(
                 item -> Order.builder()
@@ -35,9 +36,10 @@ public class OrderServiceImpl implements OrderService {
                         .price(item.getPrice())
                         .unit(item.getUnit())
                         .build()
-
         ).collect(Collectors.toList());
-
+        if (collect.isEmpty()) {
+            throw new NoDataException(ErrorCode.ORDER_NO_Data_Error);
+        }
         return collect;
     }
 

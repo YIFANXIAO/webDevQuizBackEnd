@@ -1,6 +1,7 @@
 package com.thoughtworks.quiz.api.controller;
 
 import com.thoughtworks.quiz.api.service.OrderService;
+import com.thoughtworks.quiz.common.exception.NoDataException;
 import com.thoughtworks.quiz.params.domain.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping("/order/all")
-    public ResponseEntity findProductsAll() {
+    public ResponseEntity findOrdersAll() throws NoDataException {
         List<Order> ordersByPage = orderService.getOrdersByPage();
         if (ordersByPage == null) {
             return ResponseEntity.badRequest().build();

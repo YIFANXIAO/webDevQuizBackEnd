@@ -3,6 +3,7 @@ package com.thoughtworks.quiz;
 import com.thoughtworks.quiz.api.repository.OrderRepository;
 import com.thoughtworks.quiz.api.repository.ProductRepository;
 import com.thoughtworks.quiz.api.service.OrderService;
+import com.thoughtworks.quiz.common.errors.ErrorCode;
 import com.thoughtworks.quiz.params.dto.OrderDto;
 import com.thoughtworks.quiz.params.dto.ProductDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,6 +83,16 @@ public class OrderControllerTest {
 
         List<OrderDto> allOrders = orderRepository.findAll();
         assertEquals(allOrders.get(0).getCount(), 3);
+    }
+
+    @Test
+    void should_throw_NO_DATA_EXPECTION_given_none() throws Exception {
+        orderRepository.deleteAll();
+
+        mockMvc.perform(get("/order/all"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code", is(ErrorCode.ORDER_NO_Data_Error.getCode())))
+                .andExpect(jsonPath("$.message", is(ErrorCode.ORDER_NO_Data_Error.getMessage())));
     }
 
 }
