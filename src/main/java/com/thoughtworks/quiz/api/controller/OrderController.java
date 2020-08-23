@@ -1,6 +1,7 @@
 package com.thoughtworks.quiz.api.controller;
 
 import com.thoughtworks.quiz.api.service.OrderService;
+import com.thoughtworks.quiz.common.exception.IllegalParamsException;
 import com.thoughtworks.quiz.common.exception.NoDataException;
 import com.thoughtworks.quiz.params.domain.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,12 @@ public class OrderController {
 
     @GetMapping("/order/all")
     public ResponseEntity findOrdersAll() throws NoDataException {
-        List<Order> ordersByPage = orderService.getOrdersByPage();
-        if (ordersByPage == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(ordersByPage);
+        return ResponseEntity.ok(orderService.getOrdersByPage());
     }
 
 
     @DeleteMapping("/order/{orderId}")
-    public ResponseEntity deleteOrderById(@PathVariable int orderId) {
+    public ResponseEntity deleteOrderById(@PathVariable int orderId) throws IllegalParamsException {
         orderService.deleteOrderById(orderId);
         return ResponseEntity.ok().build();
     }

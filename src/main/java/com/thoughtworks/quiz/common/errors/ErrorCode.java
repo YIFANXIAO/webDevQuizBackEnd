@@ -3,9 +3,10 @@ package com.thoughtworks.quiz.common.errors;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ErrorCode {
-    BASIC_DATA_ERROR(4001, "数据出错了"),
-    BASIC_PARAMS_ERROR(4002, "参数出错了"),
-    ORDER_NO_Data_Error(4003, "获取订单数据出错");
+
+    BASIC_ERROR(4001, "出错了"),
+    ORDER_NO_Data_Error(4002, "获取订单数据出错"),
+    DELETE_ORDER_PARAM_ERROR(4003, "删除订单传参出错");
 
 
 

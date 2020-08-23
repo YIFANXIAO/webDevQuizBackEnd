@@ -95,4 +95,12 @@ public class OrderControllerTest {
                 .andExpect(jsonPath("$.message", is(ErrorCode.ORDER_NO_Data_Error.getMessage())));
     }
 
+    @Test
+    void should_throw_Illegal_params_exception_given_wrong_id() throws Exception {
+        mockMvc.perform(delete("/order/" + 999999999))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code", is(ErrorCode.DELETE_ORDER_PARAM_ERROR.getCode())))
+                .andExpect(jsonPath("$.message", is(ErrorCode.DELETE_ORDER_PARAM_ERROR.getMessage())));
+    }
+
 }

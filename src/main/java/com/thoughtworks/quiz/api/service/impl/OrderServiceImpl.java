@@ -4,6 +4,7 @@ import com.thoughtworks.quiz.api.repository.OrderRepository;
 import com.thoughtworks.quiz.api.repository.ProductRepository;
 import com.thoughtworks.quiz.api.service.OrderService;
 import com.thoughtworks.quiz.common.errors.ErrorCode;
+import com.thoughtworks.quiz.common.exception.IllegalParamsException;
 import com.thoughtworks.quiz.params.domain.Order;
 import com.thoughtworks.quiz.params.dto.OrderDto;
 import com.thoughtworks.quiz.params.dto.ProductDto;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.thoughtworks.quiz.common.exception.NoDataException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +46,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrderById(int orderId) {
+    public void deleteOrderById(int orderId) throws IllegalParamsException {
+        Optional<OrderDto> byId = orderRepository.findById(orderId);
+        try {
+            byId.get();
+        } catch (Exception e) {
+            throw new IllegalParamsException(ErrorCode.DELETE_ORDER_PARAM_ERROR);
+        }
         orderRepository.deleteById(orderId);
     }
 
