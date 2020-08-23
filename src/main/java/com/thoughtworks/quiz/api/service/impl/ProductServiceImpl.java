@@ -2,6 +2,8 @@ package com.thoughtworks.quiz.api.service.impl;
 
 import com.thoughtworks.quiz.api.repository.ProductRepository;
 import com.thoughtworks.quiz.api.service.ProductService;
+import com.thoughtworks.quiz.common.errors.ErrorCode;
+import com.thoughtworks.quiz.common.exception.IllegalParamsException;
 import com.thoughtworks.quiz.params.domain.Product;
 import com.thoughtworks.quiz.params.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findProductsAll() {
-        List<Product> productList = productRepository.findAll().stream()
+        return productRepository.findAll().stream()
                 .map(item ->
                         Product.builder()
                                 .id(item.getId())
@@ -27,15 +29,15 @@ public class ProductServiceImpl implements ProductService {
                                 .unit(item.getUnit())
                                 .build())
                 .collect(Collectors.toList());
-        if (productList.isEmpty()) {
-            return null;
-        }
-        return productList;
     }
 
     @Override
-    public void addProduct(Product product) {
+    public void addProduct(Product product) throws IllegalParamsException {
         ProductDto productDto = ProductDto.builder().name(product.getName()).price(product.getPrice()).image(product.getImage()).unit(product.getUnit()).build();
-        productRepository.save(productDto);
+        try {
+            productRepository.save(productDto);
+        } catch (Exception e) {
+            throw new IllegalParamsException(ErrorCode.CREATE_PRODUCT_PARAM_ERROR);
+        }
     }
 }
