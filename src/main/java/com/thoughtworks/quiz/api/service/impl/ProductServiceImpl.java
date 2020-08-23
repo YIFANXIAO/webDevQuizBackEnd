@@ -33,11 +33,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addProduct(Product product) throws IllegalParamsException {
-        ProductDto productDto = ProductDto.builder().name(product.getName()).price(product.getPrice()).image(product.getImage()).unit(product.getUnit()).build();
-        try {
-            productRepository.save(productDto);
-        } catch (Exception e) {
+
+        List<ProductDto> productsByName = productRepository.findByName(product.getName());
+        if (!productsByName.isEmpty()) {
             throw new IllegalParamsException(ErrorCode.CREATE_PRODUCT_PARAM_ERROR);
         }
+        ProductDto productDto = ProductDto.builder().name(product.getName()).price(product.getPrice()).image(product.getImage()).unit(product.getUnit()).build();
+        productRepository.save(productDto);
+
     }
 }

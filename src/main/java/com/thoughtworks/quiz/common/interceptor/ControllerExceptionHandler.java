@@ -16,7 +16,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler({NoDataException.class, IllegalParamsException.class})
     public ResponseEntity<ErrorMessage> handleOrderControllerException(BasicException ex) {
         ErrorMessage errorMessage = ex.getErrorMessage();
-        return ResponseEntity.badRequest().body(errorMessage);
+        return ResponseEntity.ok(errorMessage);
     }
 
 }
