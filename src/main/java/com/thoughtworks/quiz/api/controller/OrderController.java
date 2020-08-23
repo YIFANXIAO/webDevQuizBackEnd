@@ -29,7 +29,7 @@ public class OrderController {
     }
 
     @PostMapping("/order/{productId}")
-    public ResponseEntity addOrderByProductId(@PathVariable String productId) {
+    public ResponseEntity addOrderByProductId(@PathVariable String productId) throws IllegalParamsException {
         orderService.addOrderByProductId(Integer.valueOf(productId));
         return ResponseEntity.ok().build();
     }

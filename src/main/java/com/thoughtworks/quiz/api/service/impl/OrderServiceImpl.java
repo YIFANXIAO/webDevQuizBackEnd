@@ -57,12 +57,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void addOrderByProductId(int productId) {
+    public void addOrderByProductId(int productId) throws IllegalParamsException {
         List<OrderDto> isOrderDtoExist = orderRepository.findByProductId(productId);
-
-        ProductDto productDto = productRepository.findById(productId).get();
+        ProductDto productDto = null;
+        try {
+            productDto = productRepository.findById(productId).get();
+        } catch (Exception e) {
+            throw new IllegalParamsException(ErrorCode.SELECT_PRODUCT_PARAM_ERROR);
+        }
         OrderDto orderDto;
-
         if (!isOrderDtoExist.isEmpty()) {
             orderDto = isOrderDtoExist.get(0);
             orderDto.setCount(orderDto.getCount() + 1);
