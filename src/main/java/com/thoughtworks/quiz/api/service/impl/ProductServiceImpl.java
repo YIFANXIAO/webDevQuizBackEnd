@@ -20,14 +20,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findProductsAll() {
         return productRepository.findAll().stream()
-                .map(item ->
-                        Product.builder()
-                                .id(item.getId())
-                                .name(item.getName())
-                                .price(item.getPrice())
-                                .image(item.getImage())
-                                .unit(item.getUnit())
-                                .build())
+                .map(item -> Product.builder().id(item.getId()).name(item.getName()).price(item.getPrice())
+                                .image(item.getImage()).unit(item.getUnit()).build())
                 .collect(Collectors.toList());
     }
 

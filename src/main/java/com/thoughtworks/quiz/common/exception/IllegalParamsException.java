@@ -1,7 +1,6 @@
 package com.thoughtworks.quiz.common.exception;
 
 import com.thoughtworks.quiz.common.errors.ErrorCode;
-import com.thoughtworks.quiz.common.errors.ErrorMessage;
 
 public class IllegalParamsException extends BasicException {
 

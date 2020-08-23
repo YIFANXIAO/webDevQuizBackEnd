@@ -3,12 +3,9 @@ package com.thoughtworks.quiz.api.controller;
 import com.thoughtworks.quiz.api.service.OrderService;
 import com.thoughtworks.quiz.common.exception.IllegalParamsException;
 import com.thoughtworks.quiz.common.exception.NoDataException;
-import com.thoughtworks.quiz.params.domain.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class OrderController {
@@ -16,7 +13,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @GetMapping("/order/all")
+    @GetMapping("/orders")
     public ResponseEntity findOrdersAll() throws NoDataException {
         return ResponseEntity.ok(orderService.getOrdersByPage());
     }

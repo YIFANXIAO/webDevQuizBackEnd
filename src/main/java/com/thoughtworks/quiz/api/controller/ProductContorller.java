@@ -17,7 +17,7 @@ public class ProductContorller {
     ProductService productService;
 
 
-    @GetMapping("/product/all")
+    @GetMapping("/products")
     public ResponseEntity findProductsAll() {
         return ResponseEntity.ok(productService.findProductsAll());
     }
