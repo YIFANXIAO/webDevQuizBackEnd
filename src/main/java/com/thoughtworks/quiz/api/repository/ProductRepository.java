@@ -11,4 +11,7 @@ public interface ProductRepository extends CrudRepository<ProductDto, Integer> {
 
     @Override
     List<ProductDto> findAll();
+
+    List<ProductDto> findByName(String name);
+
 }
